@@ -33,3 +33,13 @@ Middleware | Diretório de Middlewares
 Cors Middleware
 /config/express.js
 ```
+
+```
+Comandos make
+Exemplos: 
+
+node make controller:veiculo
+node make model:veiculo
+node make middleware:veiculo
+node make crud:veiculo
+```
