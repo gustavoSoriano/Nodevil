@@ -10,7 +10,7 @@ Descrição | Versão
 App | Diretório root para estrutura mvc, middleware e rotas
 Config | Diretório de configuração de banco, porta, secret, app
 Routes | Módulos de rota da api
-Controllers | Onde fica as controllers da aplicação 
+Controllers | Onde ficam as controllers da aplicação 
 Models | Schemas mongoose para MongoDB
 Views | Estáticos Html/css
 Middleware | Diretório de Middlewares
