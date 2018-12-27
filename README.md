@@ -5,7 +5,7 @@ boilerplace-node-mvc
   Estrutura de diretórios
 ```
 
-Descrição | Versão
+Diretório | Descrição
 --------- | ------:
 App | Diretório root para estrutura mvc, middleware e rotas
 Config | Diretório de configuração de banco, porta, secret, app
