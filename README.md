@@ -42,4 +42,5 @@ node make controller:veiculo
 node make model:veiculo
 node make middleware:veiculo
 node make crud:veiculo
+node make generate:key
 ```
