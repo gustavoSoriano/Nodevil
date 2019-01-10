@@ -11,4 +11,4 @@ package-lock.json
 *.njsproj
 *.sln
 *.csv
-Conn.js
+config.json
