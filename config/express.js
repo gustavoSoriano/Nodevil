@@ -5,6 +5,7 @@ const config     = require('./config.json')
 
 module.exports = () => {
     const app  = express()
+    app.use('/', express.static(__dirname + '/../app/views'))
 
     app.set('port', config.app_port)
     app.use(bodyParser.urlencoded({
