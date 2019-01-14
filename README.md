@@ -22,6 +22,7 @@ npm i
 npm link
 npm start
 ```
+```
   Arquivo de configuração
   /config/config.json
   {
