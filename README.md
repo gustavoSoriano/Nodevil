@@ -16,6 +16,12 @@ Views | Estáticos Html/css
 Middleware | Diretório de Middlewares
 
 ```
+Como iniciar projeto
+
+npm i
+npm link
+npm start
+```
   Arquivo de configuração
   /config/config.json
   {
