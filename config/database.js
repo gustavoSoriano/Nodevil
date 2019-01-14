@@ -5,7 +5,7 @@ mongoose.set('debug', config.debug_mongoose)
 module.exports = uri => {
     mongoose.Promise = global.Promise
 
-    mongoose.connect(uri, { useNewUrlParser: true })
+    mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true })
 
     mongoose.connection.on('connected', () =>  {
         console.log('Mongoose! Conectado em '+uri)
