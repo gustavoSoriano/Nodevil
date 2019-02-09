@@ -7,7 +7,7 @@
         "make": "make.js"
     },
     "scripts": {
-        "start": "nodemon index.js"
+        "start": "node index.js"
     },
     "author": "soriano <sorianox2010@hotmail.com>",
     "license": "ISC",
