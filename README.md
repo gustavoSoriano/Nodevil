@@ -1,5 +1,5 @@
 # node-mvc
-boilerplace-node-mvc
+boilerplace-node-mongo-mvc
 
 ```
   Estrutura de diretórios
@@ -9,6 +9,7 @@ Diretório | Descrição
 --------- | ------:
 App | Diretório root para estrutura mvc, middleware e rotas
 Config | Diretório de configuração de banco, porta, secret, app
+Test | Diretório de TDD
 Routes | Módulos de rota da api
 Controllers | Onde ficam as controllers da aplicação 
 Models | Schemas mongoose para MongoDB
@@ -45,9 +46,15 @@ Cors Middleware
 Comandos make
 Exemplos: 
 
-node make controller:veiculo
-node make model:veiculo
-node make middleware:veiculo
-node make crud:veiculo
-node make generate:key
+make controller:veiculo
+make model:veiculo
+make middleware:veiculo
+make crud:veiculo
+make generate:key
+make install:socket
+```
+
+```
+Tests run:
+mocha
 ```
