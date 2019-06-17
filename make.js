@@ -5,12 +5,10 @@ const fs   = require('fs')
 const exec = util.promisify(require('child_process').exec)
 const args = process.argv.slice(2)
 
-async function gitClone(nome) {
-   let { stdout, stderr } = await exec(`git clone https://github.com/gustavoSoriano/node-mvc.git ${nome}`)
+async function installSocket() {
+   let { stdout, stderr } = await exec(`npm i --save socket.io`)
+   console.log("socket.io instalado com sucesso!")
    if (stderr) return console.error(stderr)
-
-   let { out, err } = await exec('mv node-mvc ../')
-   if (err) return console.error(err)
 }
 
 
@@ -135,9 +133,13 @@ module.exports   = app => {
 }
 
 
-if (args[0] == "new") 
+if (args[0] == "install:socket" ) 
 {
-   //gitClone(args[1])
+   installSocket()
+   let config = `\napp.io = require('socket.io')(http)\napp.io.set('origins', '*:*')\n`
+   let dados  = fs.readFileSync(`index.js`, 'utf8').replace(config,'').split('\n')
+   dados[4]  += config
+   fs.writeFileSync(`index.js`, dados.join('\n') )
 }
 else if( args[0] == "generate:key" )
 {

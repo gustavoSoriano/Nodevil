@@ -1,4 +1,3 @@
-const load       = require('express-load')
 const bodyParser = require('body-parser')
 const express    = require('express')
 const config     = require('./config.json')
@@ -23,6 +22,5 @@ module.exports = () => {
         next()
     })
 
-    load('models', { cwd: 'app'}).then('controllers').then('middlewares').then('routes').into(app)
     return app
 }
