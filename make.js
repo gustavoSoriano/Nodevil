@@ -30,42 +30,54 @@ module.exports = app => {
 
 const CONTROLLER_CRUD = nome => {
 return `
-const Resolver = promise => promise.then(result => [null, result]).catch(error => [error])
 module.exports = app => {
-    const ${nome}Model  = app.models.${nome}
-    const controller = {}
+   const ${nome}Model = app.models.${nome}
+   const controller   = {}
 
-    controller.findAll = async (req, res) => {
-      const [error, dados] = await Resolver( ${nome}Model.find({}) )
-      if (error) return res.json(error)
-      res.json(dados)
-    }
+   controller.findAll = async (req, res) => {
+     try {  
+       res.json( await ${nome}Model.find({}) )
+     } catch (error) {
+       res.json({status:false, message: error.message})
+     }
+   }
 
-    controller.get = async (req, res) => {
-      const [error, dados] = await Resolver( ${nome}Model.findOne({"_id": req.params.id}) )
-      if (error) return res.json(error)
-      res.json(dados)
-    }
+   controller.get = async (req, res) => {
+     try {  
+       res.json( await ${nome}Model.findOne({"_id": req.params.id})  )
+     } catch (error) {
+       res.json({status:false, message: error.message})
+     }
+   }
 
-    controller.create = async (req, res) => {
-      const [error, dados] = await Resolver( ${nome}Model.create(req.body) )
-      if (error) return res.json(error)
-      res.json(dados)
-    }
+   controller.create = async (req, res) => {
+     try {  
+       let r = await ${nome}Model.create(req.body)
+       res.json({status:true, message: "Ramal cadastrado com sucesso"})
+     } catch (error) {
+       res.json({status:false, message: error.message})
+     }
+   }
 
-    controller.edit = async (req, res) => {
-      const [error, dados] = await Resolver( ${nome}Model.updateOne({"_id":req.body._id}, {$set: req.body}) )
-      if (error) return res.json(error)
-      res.json(dados)
-    }
+   controller.edit = async (req, res) => {
+     try {  
+       let r = await ${nome}Model.updateOne({"_id":req.body._id}, {$set: req.body}) 
+       res.json({status:true, message: "Ramal alterado com sucesso"})
+     } catch (error) {
+       res.json({status:false, message: error.message})
+     }
+   }
 
-    controller.remove = async (req, res) => {
-      const [error, dados] = await Resolver( ${nome}Model.deleteOne({"_id":req.params.id}) )
-      if (error) return res.json(error)
-      res.json(dados)
-    }
+   controller.remove = async (req, res) => {
+     try {  
+       let r = await ${nome}Model.deleteOne({"_id":req.params.id}) 
+       res.json({status:true, message: "Ramal removido com sucesso"})
+     } catch (error) {
+       res.json({status:false, message: error.message})
+     }
+   }
 
-    return controller
+   return controller
 }
 `
 }
