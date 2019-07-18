@@ -132,14 +132,17 @@ module.exports = app => {
 
 const ROUTE = nome => {
    return `
-module.exports   = app => {
-   const ${nome}   = app.controllers.${nome}
+const {Router}   = require('express'), router = Router()
 
-   app.get('/${nome}', ${nome}.findAll)
-   app.get('/${nome}/:id', ${nome}.get)
-   app.post('/${nome}', ${nome}.create)
-   app.put('/${nome}', ${nome}.edit)
-   app.delete('/${nome}/:id', ${nome}.remove)
+module.exports   = app => {
+   const ${nome} = app.controllers.${nome}
+
+   router.get('/${nome}', ${nome}.findAll)
+   router.get('/${nome}/:id', ${nome}.get)
+   router.post('/${nome}', ${nome}.create)
+   router.put('/${nome}', ${nome}.edit)
+   router.delete('/${nome}/:id', ${nome}.remove)
+   return router
 }
 `
 }
@@ -198,7 +201,7 @@ else if (args[0].match(/crud:/))
    let make = args[0].split(":")
    fs.writeFileSync(`app/controllers/${make[1]}.js`, CONTROLLER_CRUD(make[1]))
    fs.writeFileSync(`app/models/${make[1]}.js`, MODEL(make[1]))
-   fs.writeFileSync(`app/routes/${make[1]}.js`, ROUTE(make[1]))
+   fs.writeFileSync(`app/routes/api/${make[1]}.js`, ROUTE(make[1]))
    console.log("Crud criado com sucesso!")
 }
 else

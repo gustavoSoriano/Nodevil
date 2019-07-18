@@ -1,5 +1,5 @@
-# node-mvc
-boilerplace-node-mongo-mvc
+# Nodevil
+Node and Mongo MVC
 
 ```
   Estrutura de diretórios
@@ -10,10 +10,10 @@ Diretório | Descrição
 App | Diretório root para estrutura mvc, middleware e rotas
 Config | Diretório de configuração de banco, porta, secret, app
 Test | Diretório de TDD
-Routes | Módulos de rota da api
+Routes | Módulos de rota de api ou web templates
 Controllers | Onde ficam as controllers da aplicação 
 Models | Schemas mongoose para MongoDB
-Views | Estáticos Html/css
+Views | Templates ejs
 Middleware | Diretório de Middlewares
 
 ```
@@ -22,6 +22,8 @@ Como iniciar projeto
 npm i
 npm link
 npm start
+
+Open the browser on the page http://localhost:9000
 ```
 ```
   Arquivo de configuração
@@ -58,3 +60,12 @@ make install:socket
 Tests run:
 mocha
 ```
+
+
+# Colaboradores
+
+Desenvolvedor | Thumbnail
+--------- | ------:
+[Soriano](https://github.com/gustavoSoriano) | <img src="https://avatars3.githubusercontent.com/u/20995835?s=460&v=4" width="100"/>
+[David](https://github.com/DavidWilliamBalbino) | <img src="https://avatars0.githubusercontent.com/u/19325395?s=460&v=4" width="100"/>
+[Lucas Galhardo](https://github.com/LucasGalhardoLima) | <img src="https://avatars0.githubusercontent.com/u/29153930?s=460&v=4" width="100"/>

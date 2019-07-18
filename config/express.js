@@ -1,10 +1,13 @@
-const bodyParser = require('body-parser')
-const express    = require('express')
-const config     = require('./config.json')
+const bodyParser     = require('body-parser')
+const express        = require('express')
+const config         = require('./config.json')
+const expressLayouts = require('express-ejs-layouts')
 
 module.exports = () => {
     const app  = express()
-    app.use('/', express.static(__dirname + '/../app/views'))
+    app.set('view engine', 'ejs')
+    app.set('views', __dirname + '/../app/views' )
+    app.use(expressLayouts)
 
     app.set('port', config.app_port)
     app.use(bodyParser.urlencoded({
