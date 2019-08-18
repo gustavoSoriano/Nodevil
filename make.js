@@ -164,11 +164,7 @@ else if( args[0] == "generate:key" )
 
    let config    = JSON.parse( fs.readFileSync(`config/config.json`, 'utf8') )
    config.secret = k
-   config        = JSON.stringify(config)
-   config        = config.split(',').join(',\n')
-   config        = config.split('{').join('{\n')
-   config        = config.split('}').join('\n}')
-
+   config        = JSON.stringify(config, null, '\t')
    fs.writeFileSync(`config/config.json`, config )
    console.log( "Secret gerada com sucesso!" )
 }
