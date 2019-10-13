@@ -43,6 +43,12 @@ Open the browser on the page http://localhost:9000
   }
 ```
 
+
+```
+Como iniciar container docker
+sudo ./docker_run.sh
+```
+
 ```
 Cors Middleware
 /config/express.js
