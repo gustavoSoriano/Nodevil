@@ -6,8 +6,9 @@ module.exports = app => {
 
     controller.findAll = async (req, res) => {
         try{
-            const dados = await userModel.find({},{senha:false})                
-            res.json(dados)
+            const dados = await userModel.find({},{senha:false})   
+            res.json( dados )
+            app.debug("Usuários", JSON.parse( JSON.stringify(dados) ), "table")
         } catch (err){
             console.error(err)
             res.status(500).json(err)

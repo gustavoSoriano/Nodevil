@@ -1,23 +1,12 @@
 const mongoose = require('mongoose')
-const config   = require('./config.json')
+const {debug}  = require('./config.json')
 
-mongoose.set('debug', config.debug_mongoose)
+mongoose.set('debug', debug.mongoose)
 module.exports = uri => {
     mongoose.Promise = global.Promise
-
-    mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true })
-
-    mongoose.connection.on('connected', () =>  {
-        console.log('Mongoose! Conectado em '+uri)
-    })
-    mongoose.connection.on('disconnected', () =>  {
-        console.log('Mongoose! Desonectado de '+uri)
-    })
-    mongoose.connection.on('error', erro => {
-        console.log('Mongoose! Erro de conexão: '+erro)
-    })
-
-    process.on('SIGINT', () => {
-       mongoose.connection.close(() => process.exit(0) )
-    })
+    mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+    mongoose.connection.on('connected', () =>  console.log(`Mongoose! Conectado em ${uri}`))
+    mongoose.connection.on('disconnected', () =>  console.log(`Mongoose! Desonectado de ${uri}`))
+    mongoose.connection.on('error', erro => console.log(`Mongoose! Erro de conexão: ${erro}`))
+    process.on('SIGINT', () => mongoose.connection.close(() => process.exit(0) ))
 }
