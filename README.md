@@ -29,13 +29,17 @@ Open the browser on the page http://localhost:9000
   Arquivo de configuração
   /config/config.json
   {
-    "app_name": "boilerplate",
+    "app_name": "app_demo",
     "app_port": 9000,
     "secret": "3428ghne8wngbehvj458543",
     "expiresIn": "3600s",
     "mongo_connect": "mongodb://localhost/",
-    "db_name":"node-mvc-boilerplate",
-    "debug_mongoose": true
+    "db_name":"node-mvc",
+    "debug": {
+        "mongoose":false,
+        "log":true,
+        "request_log":true
+    }
   }
 ```
 
