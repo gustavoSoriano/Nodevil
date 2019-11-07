@@ -38,7 +38,7 @@ module.exports = app => {
      try {  
        res.json( await ${nome}Model.find({}) )
      } catch (error) {
-       res.json({status:false, message: error.message})
+        res.status(500).json({ details: error })
      }
    }
 
@@ -46,7 +46,7 @@ module.exports = app => {
      try {  
        res.json( await ${nome}Model.findOne({"_id": req.params.id})  )
      } catch (error) {
-       res.json({status:false, message: error.message})
+       res.status(500).json({ details: error })
      }
    }
 
@@ -55,7 +55,7 @@ module.exports = app => {
        let r = await ${nome}Model.create(req.body)
        res.json({status:true, message: "Ramal cadastrado com sucesso"})
      } catch (error) {
-       res.json({status:false, message: error.message})
+       res.status(500).json({ details: error })
      }
    }
 
@@ -64,7 +64,7 @@ module.exports = app => {
        let r = await ${nome}Model.updateOne({"_id":req.body._id}, {$set: req.body}) 
        res.json({status:true, message: "Ramal alterado com sucesso"})
      } catch (error) {
-       res.json({status:false, message: error.message})
+       res.status(500).json({ details: error })
      }
    }
 
@@ -73,7 +73,7 @@ module.exports = app => {
        let r = await ${nome}Model.deleteOne({"_id":req.params.id}) 
        res.json({status:true, message: "Ramal removido com sucesso"})
      } catch (error) {
-       res.json({status:false, message: error.message})
+       res.status(500).json({ details: error })
      }
    }
 
