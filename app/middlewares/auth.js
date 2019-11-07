@@ -15,11 +15,11 @@ module.exports = () => {
          return jwt.verify(bearerToken, config.secret, (err, authData) => {
             req.token   = bearerToken
             req.decoded = authData
-            return err ? res.status(401).json({ status: false, message: 'token inválido' }) : next()
+            return err ? res.status(401).json({ error: 'token inválido', details: err }) : next()
          })
       }
       else
-         return res.status(403).json({ status: false, message: 'Token é obrigatório' })
+         return res.status(403).json({ error: 'Token é obrigatório' })
    }
 
    return middlewares
