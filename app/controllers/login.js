@@ -12,15 +12,15 @@ module.exports = app => {
         try{
             let u = await userModel.findOne({login})
             if( !u || !passwordHash.verify( senha, u.senha ) ) 
-                return res.json({status:false, message:"Usuário ou login inválido"})
+                return res.status(401).json({error:"Usuário ou login inválido"})
 
             let usuario = {...u._doc}
             delete usuario.senha
             jwt.sign({usuario}, config.secret, { expiresIn: config.expiresIn }, (err, token) => {
-                return res.json({usuario, token: 'bearer '+ token })
+                return res.status(200).json({usuario, token: 'bearer '+ token })
             })
         } catch (err){
-            res.status(500).json(err)
+            res.status(500).json({ details: err })
         }
     }
 
