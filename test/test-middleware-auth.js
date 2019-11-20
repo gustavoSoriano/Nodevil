@@ -17,7 +17,7 @@ describe('Testes de middlewares:', () => {
     }
     
     it('Deve retornar status false', () => {
-      assert.equal( auth(payload.req, payload.res, payload.next).status, false)
+      assert.equal( auth(payload.req, payload.res, payload.next).error, 'Token inválido')
     })
   })
 
