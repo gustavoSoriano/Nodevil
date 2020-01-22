@@ -1,5 +1,5 @@
 # Nodevil
-Node and Mongo MVC
+Node MVC, Mongo, Rest e GraphQl
 
 ```
   Estrutura de diretórios
@@ -15,18 +15,20 @@ Controllers | Onde ficam as controllers da aplicação
 Models | Schemas mongoose para MongoDB
 Views | Templates ejs
 Middleware | Diretório de Middlewares
+GraphQl | Diretório recursos do graphql api
 
+
+### Como iniciar projeto
 ```
-Como iniciar projeto
-
 npm i
 npm link
 npm start
 
-Open the browser on the page http://localhost:9000
+Abra o browser no endereço: http://localhost:9000
 ```
+
+### Arquivo de configuração
 ```
-  Arquivo de configuração
   /config/config.json
   {
     "app_name": "app_demo",
@@ -44,18 +46,25 @@ Open the browser on the page http://localhost:9000
 ```
 
 
+### Documentação GraphQl
 ```
-Como iniciar container docker
+Abra o browser no endereço: http://localhost:9000/graphql
+Documentação disponível clicando na aba "Docs"
+```
+
+
+### Como iniciar container docker
+```
 sudo ./docker_run.sh
 ```
 
+### Cors Middleware
 ```
-Cors Middleware
 /config/express.js
 ```
 
+### Comandos make
 ```
-Comandos make
 Exemplos: 
 
 make controller:veiculo
@@ -66,8 +75,10 @@ make generate:key
 make install:socket
 ```
 
+
+### Testes unitários
 ```
-Tests run:
+Execução dos testes:
 mocha
 ```
 
