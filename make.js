@@ -28,10 +28,10 @@ module.exports = app => {
 }
 
 
-const CONTROLLER_CRUD = nome => {
+const CONTROLLER_CRUD = (nome, type) => {
 return `
 module.exports = app => {
-   const ${nome}Model = app.models.${nome}
+   const ${nome}Model = app.models.${type}.${nome}
    const controller   = {}
 
    controller.findAll = async (req, res) => {
@@ -42,18 +42,10 @@ module.exports = app => {
      }
    }
 
-   controller.get = async (req, res) => {
-     try {  
-       res.json( await ${nome}Model.findOne({"_id": req.params.id})  )
-     } catch (error) {
-       res.status(500).json({ details: error })
-     }
-   }
-
    controller.create = async (req, res) => {
      try {  
        let r = await ${nome}Model.create(req.body)
-       res.json({status:true, message: "Ramal cadastrado com sucesso"})
+       res.json({status:true, message: "cadastrado com sucesso"})
      } catch (error) {
        res.status(500).json({ details: error })
      }
@@ -62,7 +54,7 @@ module.exports = app => {
    controller.edit = async (req, res) => {
      try {  
        let r = await ${nome}Model.updateOne({"_id":req.body._id}, {$set: req.body}) 
-       res.json({status:true, message: "Ramal alterado com sucesso"})
+       res.json({status:true, message: "alterado com sucesso"})
      } catch (error) {
        res.status(500).json({ details: error })
      }
@@ -71,7 +63,7 @@ module.exports = app => {
    controller.remove = async (req, res) => {
      try {  
        let r = await ${nome}Model.deleteOne({"_id":req.params.id}) 
-       res.json({status:true, message: "Ramal removido com sucesso"})
+       res.json({status:true, message: "removido com sucesso"})
      } catch (error) {
        res.status(500).json({ details: error })
      }
@@ -85,15 +77,37 @@ module.exports = app => {
 
 
 
-const MODEL = nome => {
+const MODEL_MONGOOSE = nome => {
 return `
-const mongoose = require('mongoose')
-module.exports = app => {
-   const schema = mongoose.Schema({
-      /* Definir schema */
-   },{versionKey: false})
-   schema.set('timestamps', true)
-   return mongoose.model('${nome}', schema)
+const { mongodb } = require('../../../config/config.json')
+const mongoose    = require('mongoose')
+
+module.exports = () => {
+    
+    const schema = mongoose.Schema({
+        /* Definir schema */
+    },{versionKey: false})
+    schema.set('timestamps', true)
+
+    return mongodb ? mongoose.model('user', schema) : null
+}
+`
+}
+
+
+const MODEL_SEQUELIZE = nome => {
+return `
+const { sequelizedb } = require('../../../config/config.json')
+const {sequelize}     = require("../../../config/database")()
+const { INTEGER, STRING, DATE } = require('sequelize')
+
+module.exports   = () => {
+    
+    const schema = {
+        /* Definir schema */
+    }
+
+    return sequelizedb ? sequelize.define('${nome}', schema) : null
 }
 `
 }
@@ -131,14 +145,13 @@ module.exports = app => {
 
 
 const ROUTE = nome => {
-   return `
+return `
 const {Router}   = require('express'), router = Router()
 
 module.exports   = app => {
    const ${nome} = app.controllers.${nome}
 
    router.get('/${nome}', ${nome}.findAll)
-   router.get('/${nome}/:id', ${nome}.get)
    router.post('/${nome}', ${nome}.create)
    router.put('/${nome}', ${nome}.edit)
    router.delete('/${nome}/:id', ${nome}.remove)
@@ -168,37 +181,51 @@ else if( args[0] == "generate:key" )
    fs.writeFileSync(`config/config.json`, config )
    console.log( "Secret gerada com sucesso!" )
 }
-else if (args[0].match(/controller:/)) 
+else if ( args[0].includes("controller:") ) 
 {
    let make = args[0].split(":")
    fs.writeFileSync(`app/controllers/${make[1]}.js`, CONTROLLER(make[1]))
    console.log("Controller criada com sucesso!")
 }
-else if (args[0].match(/model:/)) 
+else if ( args[0].includes("model[mogoose]:") ) 
 {
    let make = args[0].split(":")
-   fs.writeFileSync(`app/models/${make[1]}.js`, MODEL(make[1]))
+   fs.writeFileSync(`app/models/mongoose/${make[1]}.js`, MODEL_MONGOOSE(make[1]))
    console.log("Model criada com sucesso!")
 }
-else if (args[0].match(/view:/)) 
+else if ( args[0].includes("model[sequelize]:") ) 
+{
+   let make = args[0].split(":")
+   fs.writeFileSync(`app/models/sequelize/${make[1]}.js`, MODEL_SEQUELIZE(make[1]))
+   console.log("Model criada com sucesso!")
+}
+else if ( args[0].includes("view:") ) 
 {
    let make = args[0].split(":")
    fs.writeFileSync(`app/views/${make[1]}.html`, VIEW(make[1]))
    console.log("View criada com sucesso!")
 }
-else if (args[0].match(/middleware:/)) 
+else if ( args[0].includes("middleware:") ) 
 {
    let make = args[0].split(":")
    fs.writeFileSync(`app/middlewares/${make[1]}.js`, MIDDLEWARE(make[1]))
    console.log("Middleware criada com sucesso!")
 }
-else if (args[0].match(/crud:/)) 
+else if ( args[0].includes("crud[mongoose]:") ) 
 {
    let make = args[0].split(":")
-   fs.writeFileSync(`app/controllers/${make[1]}.js`, CONTROLLER_CRUD(make[1]))
-   fs.writeFileSync(`app/models/${make[1]}.js`, MODEL(make[1]))
+   fs.writeFileSync(`app/controllers/${make[1]}.js`, CONTROLLER_CRUD(make[1], 'mongoose'))
+   fs.writeFileSync(`app/models/mongoose/${make[1]}.js`, MODEL_MONGOOSE(make[1]))
+   fs.writeFileSync(`app/routes/api/${make[1]}.js`, ROUTE(make[1]))
+   console.log("Crud criado com sucesso!")
+}
+else if ( args[0].includes("crud[sequelize]:") ) 
+{
+   let make = args[0].split(":")
+   fs.writeFileSync(`app/controllers/${make[1]}.js`, CONTROLLER_CRUD(make[1], 'sequelize'))
+   fs.writeFileSync(`app/models/sequelize/${make[1]}.js`, MODEL_SEQUELIZE(make[1]))
    fs.writeFileSync(`app/routes/api/${make[1]}.js`, ROUTE(make[1]))
    console.log("Crud criado com sucesso!")
 }
 else
-   console.log("Comando make com assinatura inválida")
+   console.log("Comando make com assinatura inválida ", args[0].includes("crud[mongoose]:") )
