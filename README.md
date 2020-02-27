@@ -1,5 +1,5 @@
 # Nodevil
-Node MVC, Mongo, Rest e GraphQl
+NodeJs estruturado em MVC com implementação para Socket.io, MongoDb, Sequilize e GraphQl
 
 ```
   Estrutura de diretórios
@@ -12,7 +12,8 @@ Config | Diretório de configuração de banco, porta, secret, app
 Test | Diretório de TDD
 Routes | Módulos de rota de api ou web templates
 Controllers | Onde ficam as controllers da aplicação 
-Models | Schemas mongoose para MongoDB
+Models/mongoose | Schemas para MongoDb
+Models/sequelize | Models, Migrations e Seeders do sequelize
 Views | Templates ejs
 Middleware | Diretório de Middlewares
 GraphQl | Diretório recursos do graphql api
@@ -20,29 +21,41 @@ GraphQl | Diretório recursos do graphql api
 
 ### Como iniciar projeto
 ```
-npm i
-npm link
-npm start
+npm i       (Instalação de dependências)
+npm link    (Criar um link simbolico para o arquivo make.js)
+npm run dev (Inicia a aplicação com nodemon)
+npm start   (Inicia a aplicação em produção)
 
 Abra o browser no endereço: http://localhost:9000
 ```
 
 ### Arquivo de configuração
+- Caso não crie a chave mongodb, não haverá conexão com mongodb
+- Caso não crie a chave sequelizedb, não haverá conexão com sequelize
 ```
-  /config/config.json
-  {
-    "app_name": "app_demo",
-    "app_port": 9000,
-    "secret": "3428ghne8wngbehvj458543",
-    "expiresIn": "3600s",
-    "mongo_connect": "mongodb://localhost/",
-    "db_name":"node-mvc",
-    "debug": {
-        "mongoose":false,
-        "log":true,
-        "request_log":true
+    /config/config.json
+    {
+        "app_port": 9005,
+        "secret": "3428ghne8wngbehvj458543",
+        "expiresIn": "3600s",
+        "mongodb":{
+            "uri":"mongodb://localhost/",
+            "db_name": "node-mvc"
+        },
+        "sequelizedb":{
+            "username": "root",
+            "password": "password",
+            "database": "nodejs",
+            "host": "127.0.0.1",
+            "dialect": "mysql",
+            "operatorsAliases": false
+        },
+        "debug": {
+            "mongoose":false,
+            "log":true,
+            "request_log":true
+        }
     }
-  }
 ```
 
 
@@ -67,12 +80,18 @@ sudo ./docker_run.sh
 ```
 Exemplos: 
 
-make controller:veiculo
-make model:veiculo
-make middleware:veiculo
-make crud:veiculo
-make generate:key
-make install:socket
+- make controller:veiculo
+
+- make model[mongoose]:veiculo
+- make model[sequelize]:veiculo
+
+- make middleware:veiculo
+
+- make crud[mongoose]:veiculo
+- make crud[sequelize]:veiculo
+
+- make generate:key
+- make install:socket
 ```
 
 
@@ -81,6 +100,20 @@ make install:socket
 Execução dos testes:
 mocha
 ```
+
+### Comandos do Sequelize
+
+Você pode executar comandos sequelize desde que utilizando o parâmetro --env sequelizedb. Ex:
+
+- npx sequelize-cli model:generate --name Animal --attributes firstName:string, year:integer --env sequelizedb
+- npx sequelize-cli db:migrate --env sequelizedb
+- npx sequelize-cli db:seed:all --env sequelizedb
+- npx sequelize-cli db:migrate:undo --env sequelizedb
+
+**Obs: Mais comandos disponíveis em: [sequelize.org](https://sequelize.org/master/manual/getting-started.html)**
+
+
+
 
 
 # Colaboradores
