@@ -1,14 +1,26 @@
 const passwordHash = require('password-hash')
 
 module.exports = app => {
-    const userModel  = app.models.user
+    const userModel  = app.models.mongoose.user
+    const userMysql  = app.models.sequelize.Users
     const controller = {}
 
-    controller.findAll = async (req, res) => {
+    controller.findUsersMongo = async (req, res) => {
         try{
-            const dados = await userModel.find({},{senha:false})   
+            const dados = await userModel.find({})  
+            app.table( "Usuários vindo do mongodb", JSON.parse( JSON.stringify(dados) ) )
             res.json( dados )
-            app.debug("Usuários", JSON.parse( JSON.stringify(dados) ), "table")
+        } catch (err){
+            console.error(err)
+            res.status(500).json(err)
+        }
+    }
+
+    controller.findUsersMysql = async (req, res) => {
+        try{
+            const dados = await userMysql.findAll({})  
+            app.table( "Usuários vindo do mysql", JSON.parse( JSON.stringify(dados) ) )
+            res.json( dados )
         } catch (err){
             console.error(err)
             res.status(500).json(err)

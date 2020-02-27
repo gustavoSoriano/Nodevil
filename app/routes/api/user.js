@@ -4,7 +4,8 @@ module.exports   = app => {
     const user   = app.controllers.user
     const {auth} = app.middlewares.auth
 
-    router.get('/', user.findAll)
+    router.get('/mongo', user.findUsersMongo)
+    router.get('/mysql', user.findUsersMysql)
     
     //config middleware
     router.use( auth )

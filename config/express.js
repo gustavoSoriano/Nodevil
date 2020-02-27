@@ -3,7 +3,6 @@ const express        = require('express')
 const logger         = require('morgan')
 const {app_port, debug} = require('./config.json')
 const expressLayouts = require('express-ejs-layouts')
-const debugHelper    = require("../app/helpers/debug")
 
 module.exports = () => {
     const app  = express()
@@ -14,7 +13,7 @@ module.exports = () => {
     if(debug.request_log)app.use(logger('dev'))
 
     app.set('port', app_port)
-    app.debug = debugHelper
+    require("../app/helpers/debug")(app)
 
     app.use(bodyParser.urlencoded({
         extended: true

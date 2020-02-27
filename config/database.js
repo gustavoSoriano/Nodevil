@@ -1,12 +1,22 @@
-const mongoose = require('mongoose')
-const {debug}  = require('./config.json')
+const {debug, mongodb, sequelizedb} = require('./config.json')
 
-mongoose.set('debug', debug.mongoose)
-module.exports = uri => {
+const useMongoDb   = () => {
+    const mongoose = require('mongoose')
+    mongoose.set('debug', debug.mongoose)
     mongoose.Promise = global.Promise
-    mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
-    mongoose.connection.on('connected', () =>  console.log(`Mongoose! Conectado em ${uri}`))
-    mongoose.connection.on('disconnected', () =>  console.log(`Mongoose! Desonectado de ${uri}`))
-    mongoose.connection.on('error', erro => console.log(`Mongoose! Erro de conexão: ${erro}`))
+    mongoose.connect(mongodb.uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+    mongoose.connection.on('connected', () =>  console.log(`Mongoose! Conectado`))
+    mongoose.connection.on('disconnected', () =>  console.log(`Mongoose! Desonectado`))
+    mongoose.connection.on('error', e => console.log(`Mongoose! Erro de conexão: ${e}`))
     process.on('SIGINT', () => mongoose.connection.close(() => process.exit(0) ))
 }
+
+const useSequelize = () => {
+    const Sequelize = require('sequelize')
+    return new Sequelize(sequelizedb)
+}
+
+module.exports = () => ({
+    mongodb: mongodb ? useMongoDb() : null,
+    sequelize: sequelizedb ? useSequelize() : null
+})
