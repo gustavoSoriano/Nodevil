@@ -37,7 +37,8 @@ module.exports = app => {
    controller.findAll = async (req, res) => {
      try {  
        res.json( await ${nome}Model.find({}) )
-     } catch (error) {
+     } 
+     catch (error) {
         res.status(500).json({ details: error })
      }
    }
