@@ -1,9 +1,10 @@
 # Nodevil
 NodeJs estruturado em MVC com implementação para Socket.io, MongoDb, Sequilize e GraphQl
 
-```
-  Estrutura de diretórios
-```
+<img src="https://github.com/gustavoSoriano/Nodevil/blob/master/config/logo.jpeg" width="300" />
+
+
+### Estrutura de diretórios
 
 Diretório | Descrição
 --------- | ------:
