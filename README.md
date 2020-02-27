@@ -80,18 +80,25 @@ sudo ./docker_run.sh
 ```
 Exemplos: 
 
-- make controller:veiculo
+- node make controller:veiculo
 
-- make model[mongoose]:veiculo
-- make model[sequelize]:veiculo
+- node make model[mongoose]:veiculo
+- node make model[sequelize]:veiculo
 
-- make middleware:veiculo
+- node make middleware:veiculo
 
-- make crud[mongoose]:veiculo
-- make crud[sequelize]:veiculo
+- node make crud[mongoose]:veiculo
+- node make crud[sequelize]:veiculo
 
-- make generate:key
-- make install:socket
+- node make generate:key
+
+```
+
+
+### Instalação do Socket.io
+```
+Execução do comando make
+- node make install:socket
 ```
 
 
