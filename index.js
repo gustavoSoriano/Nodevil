@@ -1,6 +1,6 @@
 const app     = require('./config/express')()
 const consign = require('consign')
-http          = require('http').createServer(app)
+const http    = require('http').createServer(app)
 
 require('./config/database')()
 consign({ cwd: 'app' }).include('models').then('controllers').then('middlewares').then('routes').then('graphql').into(app)
